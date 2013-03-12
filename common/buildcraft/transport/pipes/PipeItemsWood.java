@@ -209,7 +209,13 @@ public class PipeItemsWood extends Pipe implements IPowerReceptor {
 
 	public ItemStack checkExtractGeneric(IInventory inventory, boolean doRemove, ForgeDirection from, int start, int stop) {
 		for (int k = start; k <= stop; ++k) {
-			ItemStack slot = inventory.getStackInSlot(k);
+			ItemStack slot = null;
+			try {
+				slot = inventory.getStackInSlot(k);
+			} catch (Exception e) {
+				System.out.println("An exception occurred while BuildCraft attempted to extract from inventory "+inventory+" of type "+inventory.getClass().getName()+" at slot "+k);
+				e.printStackTrace();
+			}
 
 			if (slot != null && slot.stackSize > 0) {
 				if (doRemove) {
